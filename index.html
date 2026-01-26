@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Adaptiv AI | Automate Your Sales Stack</title>
+    <title>Adaptiv AI | Sales Team Pitch</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script>
@@ -25,12 +25,12 @@
                         'hero-glow': 'radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.15) 0%, rgba(15, 23, 42, 0) 70%)',
                     },
                     animation: {
-                        'infinite-scroll': 'infinite-scroll 35s linear infinite',
+                        'scroll': 'scroll 30s linear infinite',
                     },
                     keyframes: {
-                        'infinite-scroll': {
-                            from: { transform: 'translateX(0)' },
-                            to: { transform: 'translateX(-100%)' },
+                        'scroll': {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }, /* Move half way (the length of one set) */
                         }
                     }
                 }
@@ -69,23 +69,19 @@
 
         /* Logo Belt Styling */
         .logo-slider-mask {
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
         .tech-logo {
-            height: 32px; /* Fixed height for consistency */
+            height: 32px;
             width: auto;
-            max-width: 150px;
-            /* Forces logo to be pure white to ensure visibility on dark background */
-            filter: brightness(0) invert(1); 
-            opacity: 0.7;
+            max-width: 140px;
+            opacity: 0.6;
             transition: all 0.3s ease;
         }
         
         .tech-logo:hover {
-            /* Reveals original colors on hover */
-            filter: none; 
             opacity: 1;
             transform: scale(1.1);
         }
@@ -148,24 +144,28 @@
             <p class="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Powered by the best in Automation & AI</p>
         </div>
         
-        <div class="relative flex overflow-x-hidden logo-slider-mask">
-            <div class="flex animate-infinite-scroll space-x-16 items-center whitespace-nowrap py-4 px-8">
+        <div class="flex overflow-hidden logo-slider-mask">
+            <div class="flex animate-scroll whitespace-nowrap">
                 
-                <img src="https://www.vectorlogo.zone/logos/hubspot/hubspot-ar21.svg" alt="HubSpot" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/salesforce/salesforce-ar21.svg" alt="Salesforce" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/openai/openai-ar21.svg" alt="OpenAI" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/n8n/n8n-ar21.svg" alt="n8n" class="tech-logo" style="height: 35px;">
-                <img src="https://www.vectorlogo.zone/logos/supabase/supabase-ar21.svg" alt="Supabase" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/postgresql/postgresql-ar21.svg" alt="PostgreSQL" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/apify/apify-ar21.svg" alt="Apify" class="tech-logo">
-                
-                <img src="https://www.vectorlogo.zone/logos/hubspot/hubspot-ar21.svg" alt="HubSpot" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/salesforce/salesforce-ar21.svg" alt="Salesforce" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/openai/openai-ar21.svg" alt="OpenAI" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/n8n/n8n-ar21.svg" alt="n8n" class="tech-logo" style="height: 35px;">
-                <img src="https://www.vectorlogo.zone/logos/supabase/supabase-ar21.svg" alt="Supabase" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/postgresql/postgresql-ar21.svg" alt="PostgreSQL" class="tech-logo">
-                <img src="https://www.vectorlogo.zone/logos/apify/apify-ar21.svg" alt="Apify" class="tech-logo">
+                <div class="flex items-center space-x-16 mx-8">
+                    <img src="https://cdn.simpleicons.org/hubspot/white" alt="HubSpot" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/salesforce/white" alt="Salesforce" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/openai/white" alt="OpenAI" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/n8n/white" alt="n8n" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/supabase/white" alt="Supabase" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/postgresql/white" alt="PostgreSQL" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/apify/white" alt="Apify" class="tech-logo">
+                </div>
+
+                <div class="flex items-center space-x-16 mx-8">
+                    <img src="https://cdn.simpleicons.org/hubspot/white" alt="HubSpot" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/salesforce/white" alt="Salesforce" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/openai/white" alt="OpenAI" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/n8n/white" alt="n8n" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/supabase/white" alt="Supabase" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/postgresql/white" alt="PostgreSQL" class="tech-logo">
+                    <img src="https://cdn.simpleicons.org/apify/white" alt="Apify" class="tech-logo">
+                </div>
 
             </div>
         </div>
