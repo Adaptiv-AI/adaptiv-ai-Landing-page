@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Adaptiv AI | Sales Team Pitch</title>
+    <title>Adaptiv AI | Automate Your Sales Stack</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script>
@@ -25,12 +25,12 @@
                         'hero-glow': 'radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.15) 0%, rgba(15, 23, 42, 0) 70%)',
                     },
                     animation: {
-                        'scroll': 'scroll 30s linear infinite',
+                        'scroll': 'scroll 40s linear infinite',
                     },
                     keyframes: {
                         'scroll': {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' }, /* Move half way (the length of one set) */
+                            '100%': { transform: 'translateX(-50%)' }, /* Moves exactly half the width */
                         }
                     }
                 }
@@ -74,14 +74,18 @@
         }
 
         .tech-logo {
-            height: 32px;
+            height: 35px;
             width: auto;
-            max-width: 140px;
-            opacity: 0.6;
+            max-width: 160px;
+            /* Force logos to be white for consistency on dark background */
+            filter: brightness(0) invert(1);
+            opacity: 0.7;
             transition: all 0.3s ease;
         }
         
         .tech-logo:hover {
+            /* Reveal original logo colors on hover */
+            filter: none;
             opacity: 1;
             transform: scale(1.1);
         }
@@ -148,23 +152,23 @@
             <div class="flex animate-scroll whitespace-nowrap">
                 
                 <div class="flex items-center space-x-16 mx-8">
-                    <img src="https://cdn.simpleicons.org/hubspot/white" alt="HubSpot" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/salesforce/white" alt="Salesforce" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/openai/white" alt="OpenAI" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/n8n/white" alt="n8n" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/supabase/white" alt="Supabase" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/postgresql/white" alt="PostgreSQL" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/apify/white" alt="Apify" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/HubSpot_Logo.svg" alt="HubSpot" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/N8n_logo.svg" alt="n8n" class="tech-logo" style="height: 30px;">
+                    <img src="https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-wordmark--light.svg" alt="Supabase" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
+                    <img src="https://raw.githubusercontent.com/apify/apify-shared/master/assets/branding/apify_logo.svg" alt="Apify" class="tech-logo" style="height: 28px;">
                 </div>
 
                 <div class="flex items-center space-x-16 mx-8">
-                    <img src="https://cdn.simpleicons.org/hubspot/white" alt="HubSpot" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/salesforce/white" alt="Salesforce" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/openai/white" alt="OpenAI" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/n8n/white" alt="n8n" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/supabase/white" alt="Supabase" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/postgresql/white" alt="PostgreSQL" class="tech-logo">
-                    <img src="https://cdn.simpleicons.org/apify/white" alt="Apify" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/HubSpot_Logo.svg" alt="HubSpot" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/N8n_logo.svg" alt="n8n" class="tech-logo" style="height: 30px;">
+                    <img src="https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-wordmark--light.svg" alt="Supabase" class="tech-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
+                    <img src="https://raw.githubusercontent.com/apify/apify-shared/master/assets/branding/apify_logo.svg" alt="Apify" class="tech-logo" style="height: 28px;">
                 </div>
 
             </div>
