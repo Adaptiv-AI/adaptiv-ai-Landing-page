@@ -25,12 +25,12 @@
                         'hero-glow': 'radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.15) 0%, rgba(15, 23, 42, 0) 70%)',
                     },
                     animation: {
-                        'scroll': 'scroll 40s linear infinite',
+                        'scroll': 'scroll 35s linear infinite',
                     },
                     keyframes: {
                         'scroll': {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' }, /* Moves exactly half the width */
+                            '100%': { transform: 'translateX(-50%)' }, 
                         }
                     }
                 }
@@ -77,7 +77,8 @@
             height: 35px;
             width: auto;
             max-width: 160px;
-            /* Force logos to be white for consistency on dark background */
+            object-fit: contain; 
+            /* Force logos to be white */
             filter: brightness(0) invert(1);
             opacity: 0.7;
             transition: all 0.3s ease;
@@ -96,7 +97,7 @@
     <nav class="fixed w-full z-50 bg-brand-bg/90 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
+                <div class="hidden md:flex items-center">
                     <span class="text-2xl font-bold text-white tracking-tight">Adaptiv<span class="text-brand-primary">AI</span></span>
                 </div>
                 <div class="hidden md:flex space-x-8">
@@ -151,24 +152,26 @@
         <div class="flex overflow-hidden logo-slider-mask">
             <div class="flex animate-scroll whitespace-nowrap">
                 
-                <div class="flex items-center space-x-16 mx-8">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/HubSpot_Logo.svg" alt="HubSpot" class="tech-logo">
+                <div class="flex items-center space-x-12 md:space-x-16 mx-8">
+                    <img src="https://www.vectorlogo.zone/logos/hubspot/hubspot-ar21.svg" alt="HubSpot" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/N8n_logo.svg" alt="n8n" class="tech-logo" style="height: 30px;">
+                    
+                    <span class="text-3xl font-bold text-slate-300 tracking-tight opacity-70 hover:opacity-100 hover:text-white transition cursor-default">n8n</span>
+                    
                     <img src="https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-wordmark--light.svg" alt="Supabase" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
-                    <img src="https://raw.githubusercontent.com/apify/apify-shared/master/assets/branding/apify_logo.svg" alt="Apify" class="tech-logo" style="height: 28px;">
                 </div>
 
-                <div class="flex items-center space-x-16 mx-8">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/HubSpot_Logo.svg" alt="HubSpot" class="tech-logo">
+                <div class="flex items-center space-x-12 md:space-x-16 mx-8">
+                    <img src="https://www.vectorlogo.zone/logos/hubspot/hubspot-ar21.svg" alt="HubSpot" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/N8n_logo.svg" alt="n8n" class="tech-logo" style="height: 30px;">
+                    
+                    <span class="text-3xl font-bold text-slate-300 tracking-tight opacity-70 hover:opacity-100 hover:text-white transition cursor-default">n8n</span>
+                    
                     <img src="https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-wordmark--light.svg" alt="Supabase" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
-                    <img src="https://raw.githubusercontent.com/apify/apify-shared/master/assets/branding/apify_logo.svg" alt="Apify" class="tech-logo" style="height: 28px;">
                 </div>
 
             </div>
