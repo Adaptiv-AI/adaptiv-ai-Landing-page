@@ -57,6 +57,20 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px -5px rgba(84, 175, 173, 0.4);
         }
+
+        /* Logo styling for the tech stack strip */
+        .tech-logo {
+            height: 32px;
+            width: auto;
+            opacity: 0.7;
+            filter: grayscale(100%) brightness(200%); /* Make logos white-ish */
+            transition: all 0.3s ease;
+        }
+        .tech-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%) brightness(100%); /* Restore original color on hover */
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -108,16 +122,16 @@
     </section>
 
     <div class="border-y border-white/5 bg-brand-bg relative">
-        <div class="max-w-7xl mx-auto px-4 py-10 text-center">
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-[0.2em] mb-8">Powered by the best in Automation & AI</p>
-            <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 md:gap-x-12 opacity-70">
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">HubSpot</span>
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">Salesforce</span>
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">OpenAI</span>
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">n8n</span>
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">Supabase</span>
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">Postgres</span>
-                <span class="text-lg md:text-xl font-semibold text-white/80 hover:text-brand-primary transition cursor-default">Apify</span>
+        <div class="max-w-7xl mx-auto px-4 py-12 text-center">
+            <p class="text-slate-500 text-xs font-bold uppercase tracking-[0.2em] mb-10">Powered by the best in Automation & AI</p>
+            <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 opacity-80">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/HubSpot_Logo.svg" alt="HubSpot" class="tech-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/N8n-logo-new.svg" alt="n8n" class="tech-logo" style="height: 28px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Supabase_logo.svg/512px-Supabase_logo.svg.png" alt="Supabase" class="tech-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Apify-logo.svg" alt="Apify" class="tech-logo" style="height: 26px;">
             </div>
         </div>
     </div>
