@@ -28,7 +28,7 @@
                     },
                     animation: {
                         'scroll': 'scroll 35s linear infinite',
-                        'news-ticker': 'ticker 60s linear infinite',
+                        'news-ticker': 'ticker 120s linear infinite', /* Slowed down for readability */
                     },
                     keyframes: {
                         'scroll': {
@@ -36,7 +36,7 @@
                             '100%': { transform: 'translateX(-50%)' }, 
                         },
                         'ticker': {
-                            '0%': { transform: 'translateX(100%)' },
+                            '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-100%)' },
                         }
                     }
@@ -64,8 +64,8 @@
             --bg-body: #f8fafc;
             --bg-card: #ffffff;
             --text-main: #0f172a;
-            --text-muted: #475569; /* Darker grey for readability */
-            --border-color: #cbd5e1; /* Visible border */
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
             --hero-glow: radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.1) 0%, rgba(248, 250, 252, 0) 70%);
             --grid-color: rgba(15, 23, 42, 0.03);
             --logo-color: #0f172a;
@@ -125,7 +125,7 @@
         }
 
         [data-theme="light"] .tech-logo {
-            filter: grayscale(100%) brightness(0.2); /* Make logos dark in light mode */
+            filter: grayscale(100%) brightness(0.2); 
             opacity: 0.6;
         }
         
@@ -207,12 +207,14 @@
             overflow: hidden;
             white-space: nowrap;
             position: relative;
+            width: 100%;
         }
-        .news-ticker-content {
-            display: inline-block;
-            animation: news-ticker 40s linear infinite;
+        .news-ticker-wrapper {
+            display: flex;
+            width: fit-content;
+            animation: news-ticker 120s linear infinite;
         }
-        .news-ticker-content:hover {
+        .news-ticker-wrapper:hover {
             animation-play-state: paused;
         }
     </style>
@@ -486,7 +488,7 @@
                             <div>
                                 <div class="flex justify-between items-center mb-2">
                                     <label class="text-sm font-semibold text-brand-text">Hours/Week on Manual Prospecting & Admin</label>
-                                    <span class="text-brand-primary font-bold" id="hoursVal">10 hrs</span>
+                                    <span class="text-brand-primary font-bold" id="hoursVal">10 hrs/wk</span>
                                 </div>
                                 <input type="range" min="1" max="60" value="10" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer" id="hoursInput" oninput="calculateROI()">
                                 <p class="text-xs text-brand-muted mt-2">Includes prospecting, list building, and CRM data entry.</p>
@@ -535,7 +537,7 @@
 
     <div class="bg-[var(--ticker-bg)] border-t border-[var(--border-color)] py-3 overflow-hidden relative z-20 transition-colors duration-300">
         <div class="news-ticker-container flex items-center">
-            <div class="news-ticker-content flex gap-12 px-4 text-sm font-medium text-brand-muted" id="newsTickerContent">
+            <div class="news-ticker-wrapper flex gap-12 px-4 text-sm font-medium text-brand-muted" id="newsTickerContent">
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Gartner predicts 60% of B2B sales work will be automated by 2026</span>
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>OpenAI announces new enterprise features for automated workflows</span>
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Anthropic Claude 3.5 Sonnet sets new benchmark for data extraction</span>
@@ -544,9 +546,6 @@
                 
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Gartner predicts 60% of B2B sales work will be automated by 2026</span>
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>OpenAI announces new enterprise features for automated workflows</span>
-                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Anthropic Claude 3.5 Sonnet sets new benchmark for data extraction</span>
-                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Salesforce launches autonomous AI agents for CRM management</span>
-                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Google integrates Gemini deeply into Workspace for automated outreach</span>
             </div>
         </div>
     </div>
@@ -626,16 +625,12 @@
         // Init Calculator
         calculateROI();
 
-        /*
-        // --- REAL NEWS API INTEGRATION (OPTIONAL) ---
-        // To use real news:
-        // 1. Get a key from newsapi.org
-        // 2. Uncomment the function below
-        // 3. Call fetchNews() at the bottom of this script block
-
+        
+        // --- REAL NEWS API INTEGRATION (ACTIVATED) ---
         async function fetchNews() {
-            const apiKey = 'YOUR_API_KEY_HERE'; 
-            const url = `https://newsapi.org/v2/everything?q=artificial+intelligence+business&sortBy=publishedAt&language=en&apiKey=${apiKey}`;
+            const apiKey = '4402c3cc82d44e3aa515fd095e3d5bf0'; 
+            // Query for "artificial intelligence" OR "technology business", sorted by newest
+            const url = `https://newsapi.org/v2/everything?q="artificial+intelligence"+OR+"technology+business"&sortBy=publishedAt&language=en&apiKey=${apiKey}`;
             
             try {
                 const response = await fetch(url);
@@ -645,13 +640,15 @@
                     const ticker = document.getElementById('newsTickerContent');
                     ticker.innerHTML = ''; // Clear static content
                     
-                    // Take top 5 articles
-                    const articles = data.articles.slice(0, 5);
+                    // Take top 10 articles
+                    const articles = data.articles.slice(0, 10);
                     
                     // Build HTML
                     let html = '';
                     articles.forEach(article => {
-                        html += `<span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span><a href="${article.url}" target="_blank" class="hover:text-brand-primary transition">${article.title}</a></span>`;
+                        // Clean up title (remove source name at end if present)
+                        const title = article.title.split(' - ')[0];
+                        html += `<span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span><a href="${article.url}" target="_blank" class="hover:text-brand-primary transition">${title}</a></span>`;
                     });
                     
                     // Duplicate for loop
@@ -660,10 +657,13 @@
                 }
             } catch (error) {
                 console.error('Error fetching news:', error);
+                // Fallback (static content) remains if error occurs
             }
         }
-        // fetchNews(); 
-        */
+        
+        // Initialize News Feed
+        fetchNews();
+        
     </script>
 
 </body>
