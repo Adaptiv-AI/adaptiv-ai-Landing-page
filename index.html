@@ -28,7 +28,7 @@
                     },
                     animation: {
                         'scroll': 'scroll 35s linear infinite',
-                        'news-ticker': 'ticker 60s linear infinite',
+                        'news-ticker': 'ticker 120s linear infinite',
                     },
                     keyframes: {
                         'scroll': {
@@ -36,7 +36,7 @@
                             '100%': { transform: 'translateX(-50%)' }, 
                         },
                         'ticker': {
-                            '0%': { transform: 'translateX(100%)' },
+                            '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-100%)' },
                         }
                     }
@@ -348,20 +348,31 @@
                                 <p class="text-brand-muted text-sm">Letting hot prospects cool down while you sleep.</p>
                             </div>
                         </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mt-1">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-brand-text font-semibold">Outreach Scalability Limitations</h4>
+                                <p class="text-brand-muted text-sm">Hitting a ceiling with manual outreach volume.</p>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <div class="relative mt-8 md:mt-0">
                     <div class="absolute -inset-4 bg-brand-primary/20 rounded-full blur-3xl opacity-30"></div>
                     <div class="relative bg-brand-card border border-[var(--border-color)] rounded-2xl p-8 shadow-2xl">
                         <div class="text-center p-4 md:p-8">
-                           <div class="bg-brand-bg border border-[var(--border-color)] p-6 md:p-8 rounded-xl shadow-inner inline-block w-full">
-                               <p class="font-mono text-xs text-brand-primary mb-3 tracking-widest uppercase">System Status</p>
-                               <p class="text-4xl font-bold text-brand-text mb-2">98%</p>
+                           <div class="bg-red-950/50 border border-red-500/50 p-6 md:p-8 rounded-xl shadow-inner inline-block w-full">
+                               <p class="font-mono text-xs text-red-500 mb-3 tracking-widest uppercase">System Status</p>
+                               <p class="text-4xl font-bold text-red-500 mb-2">45%</p>
                                <p class="text-brand-muted">Data Hygiene Score</p>
                            </div>
-                           <div class="mt-8 flex justify-center space-x-3">
-                               <div class="w-3 h-3 rounded-full bg-brand-primary animate-ping"></div>
-                               <span class="text-sm text-brand-primary">Automated by Adaptiv AI</span>
+                           <div class="mt-8 flex justify-center items-center space-x-3">
+                               <div class="w-4 h-4 text-red-500 flex items-center justify-center">
+                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" /></svg>
+                               </div>
+                               <span class="text-sm text-red-500 font-medium">Requesting AdaptivAI to automate</span>
                            </div>
                         </div>
                     </div>
