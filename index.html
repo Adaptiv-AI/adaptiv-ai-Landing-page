@@ -28,7 +28,7 @@
                     },
                     animation: {
                         'scroll': 'scroll 35s linear infinite',
-                        'news-ticker': 'ticker 120s linear infinite', /* Slowed down for readability */
+                        'news-ticker': 'ticker 60s linear infinite',
                     },
                     keyframes: {
                         'scroll': {
@@ -36,7 +36,7 @@
                             '100%': { transform: 'translateX(-50%)' }, 
                         },
                         'ticker': {
-                            '0%': { transform: 'translateX(0)' },
+                            '0%': { transform: 'translateX(100%)' },
                             '100%': { transform: 'translateX(-100%)' },
                         }
                     }
@@ -230,8 +230,8 @@
                 </div>
 
                 <div class="hidden md:flex space-x-8">
-                    <a href="#solutions" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">Solutions</a>
                     <a href="#process" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">How it Works</a>
+                    <a href="#solutions" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">Solutions</a>
                     <a href="#pricing" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">Pricing</a>
                     <a href="#roi" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">ROI Calculator</a>
                 </div>
@@ -312,7 +312,7 @@
         </div>
     </div>
 
-    <section class="py-20 md:py-24 bg-brand-bg relative transition-colors duration-300">
+    <section id="process" class="py-20 md:py-24 bg-brand-bg relative transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
                 <div>
@@ -546,6 +546,9 @@
                 
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Gartner predicts 60% of B2B sales work will be automated by 2026</span>
                 <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>OpenAI announces new enterprise features for automated workflows</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Anthropic Claude 3.5 Sonnet sets new benchmark for data extraction</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Salesforce launches autonomous AI agents for CRM management</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Google integrates Gemini deeply into Workspace for automated outreach</span>
             </div>
         </div>
     </div>
