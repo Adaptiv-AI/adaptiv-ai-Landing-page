@@ -14,23 +14,30 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            bg: '#0f172a',      // Slate 900
-                            card: '#1e293b',    // Slate 800
-                            primary: '#54AFAD', // Adaptiv Teal
-                            light: '#7ED3D1',   // Light Teal
-                            hover: '#44918f',   // Darker Teal for hover
+                            bg: 'var(--bg-body)',
+                            card: 'var(--bg-card)',
+                            primary: '#54AFAD',
+                            light: '#7ED3D1',
+                            hover: '#44918f',
+                            text: 'var(--text-main)',
+                            muted: 'var(--text-muted)'
                         }
                     },
                     backgroundImage: {
-                        'hero-glow': 'radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.15) 0%, rgba(15, 23, 42, 0) 70%)',
+                        'hero-glow': 'var(--hero-glow)',
                     },
                     animation: {
                         'scroll': 'scroll 35s linear infinite',
+                        'news-ticker': 'ticker 60s linear infinite',
                     },
                     keyframes: {
                         'scroll': {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-50%)' }, 
+                        },
+                        'ticker': {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' },
                         }
                     }
                 }
@@ -38,14 +45,47 @@
         }
     </script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; overflow-x: hidden; }
+        :root {
+            /* Dark Mode (Default) */
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --hero-glow: radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            --grid-color: rgba(255, 255, 255, 0.03);
+            --logo-color: #ffffff;
+            --ticker-bg: #0f172a;
+            --slider-track: #475569;
+        }
+
+        [data-theme="light"] {
+            /* Light Mode Overrides */
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569; /* Darker grey for readability */
+            --border-color: #cbd5e1; /* Visible border */
+            --hero-glow: radial-gradient(circle at 50% 0%, rgba(84, 175, 173, 0.1) 0%, rgba(248, 250, 252, 0) 70%);
+            --grid-color: rgba(15, 23, 42, 0.03);
+            --logo-color: #0f172a;
+            --ticker-bg: #f1f5f9;
+            --slider-track: #cbd5e1;
+        }
+
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            transition: background-color 0.3s, color 0.3s;
+        }
         
         /* Optimized Grid Background */
         .bg-grid {
             background-size: 40px 40px;
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
             mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
         }
@@ -78,47 +118,137 @@
             width: auto;
             max-width: 160px;
             object-fit: contain; 
-            /* Force logos to be white */
+            /* Force logos to adapt based on theme */
             filter: brightness(0) invert(1);
             opacity: 0.7;
             transition: all 0.3s ease;
         }
+
+        [data-theme="light"] .tech-logo {
+            filter: grayscale(100%) brightness(0.2); /* Make logos dark in light mode */
+            opacity: 0.6;
+        }
         
         .tech-logo:hover {
-            /* Reveal original logo colors on hover */
             filter: none;
             opacity: 1;
             transform: scale(1.1);
+        }
+
+        /* Nav Link Hover Color Fix for Light Mode */
+        [data-theme="light"] .nav-link:hover {
+            color: #54AFAD;
+        }
+
+        /* BRAND LOGO CSS */
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--logo-color);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+        .brand-logo span { 
+            color: #54AFAD; 
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+        .theme-toggle:hover {
+            color: #54AFAD;
+            border-color: #54AFAD;
+        }
+
+        /* Card Borders for Light Mode */
+        [data-theme="light"] .border-white\/5,
+        [data-theme="light"] .border-white\/10 {
+            border-color: #cbd5e1;
+        }
+        
+        [data-theme="light"] .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ROI Calculator Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #54AFAD;
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 0 10px rgba(84, 175, 173, 0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: var(--slider-track);
+            border-radius: 2px;
+        }
+        
+        /* Ticker Animation */
+        .news-ticker-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .news-ticker-content {
+            display: inline-block;
+            animation: news-ticker 40s linear infinite;
+        }
+        .news-ticker-content:hover {
+            animation-play-state: paused;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed w-full z-50 bg-brand-bg/90 backdrop-blur-md border-b border-white/10">
+    <nav class="fixed w-full z-50 bg-brand-bg/90 backdrop-blur-md border-b border-[var(--border-color)] transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 
                 <div class="flex items-center flex-shrink-0">
-                    <span class="text-2xl font-bold text-white tracking-tight">Adaptiv<span class="text-brand-primary">AI</span></span>
+                    <div class="brand-logo">adaptiv<span>AI</span></div>
                 </div>
 
                 <div class="hidden md:flex space-x-8">
-                    <a href="#solutions" class="text-slate-400 hover:text-brand-primary transition font-medium">Solutions</a>
-                    <a href="#process" class="text-slate-400 hover:text-brand-primary transition font-medium">How it Works</a>
-                    <a href="#pricing" class="text-slate-400 hover:text-brand-primary transition font-medium">Pricing</a>
+                    <a href="#solutions" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">Solutions</a>
+                    <a href="#process" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">How it Works</a>
+                    <a href="#pricing" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">Pricing</a>
+                    <a href="#roi" class="text-brand-muted hover:text-brand-primary transition font-medium nav-link">ROI Calculator</a>
                 </div>
 
                 <div class="flex items-center">
                     <a href="https://calendly.com/adaptivaioutreach/30min" target="_blank" class="btn-primary px-4 py-2 md:px-5 md:py-2.5 rounded-full font-semibold text-xs md:text-sm transition shadow-lg whitespace-nowrap">
                         Get Free Audit
                     </a>
+                    
+                    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </button>
                 </div>
 
             </div>
         </div>
     </nav>
 
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-bg transition-colors duration-300">
         <div class="absolute inset-0 bg-grid z-0 pointer-events-none"></div>
         <div class="absolute inset-0 bg-hero-glow z-0 pointer-events-none"></div>
 
@@ -128,17 +258,17 @@
                     <span class="flex h-2 w-2 rounded-full bg-brand-primary mr-2 animate-pulse"></span>
                     Exclusively for B2B Sales Teams
                 </div>
-                <h1 class="text-4xl md:text-7xl font-bold text-white tracking-tight mb-8 leading-tight">
+                <h1 class="text-4xl md:text-7xl font-bold text-brand-text tracking-tight mb-8 leading-tight">
                     We automate the boring stuff so you can <span class="gradient-text">close the deal.</span>
                 </h1>
-                <p class="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                <p class="text-lg md:text-xl text-brand-muted mb-12 max-w-2xl mx-auto leading-relaxed">
                     Stop drowning in manual data entry and messy CRMs. Adaptiv AI streamlines your sales workflow, cleans your data, and generates leads automatically.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="#book-call" class="btn-primary text-lg px-8 py-4 rounded-xl font-bold shadow-lg shadow-brand-primary/20">
                         Automate My Pipeline
                     </a>
-                    <a href="#solutions" class="bg-brand-card hover:bg-slate-700 border border-white/10 text-white text-lg px-8 py-4 rounded-xl font-medium transition">
+                    <a href="#solutions" class="bg-brand-card hover:bg-[var(--border-color)] border border-[var(--border-color)] text-brand-text text-lg px-8 py-4 rounded-xl font-medium transition">
                         View Services
                     </a>
                 </div>
@@ -146,9 +276,9 @@
         </div>
     </section>
 
-    <div class="border-y border-white/5 bg-brand-bg relative py-12 overflow-hidden">
+    <div class="border-y border-[var(--border-color)] bg-brand-bg relative py-12 overflow-hidden transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 text-center mb-8">
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Powered by the best in Automation & AI</p>
+            <p class="text-brand-muted text-xs font-bold uppercase tracking-[0.2em]">Powered by the best in Automation & AI</p>
         </div>
         
         <div class="flex overflow-hidden logo-slider-mask">
@@ -159,7 +289,7 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
                     
-                    <span class="text-3xl font-bold text-slate-300 tracking-tight opacity-70 hover:opacity-100 hover:text-white transition cursor-default">n8n</span>
+                    <span class="text-3xl font-bold text-brand-muted tracking-tight opacity-70 hover:opacity-100 hover:text-brand-text transition cursor-default">n8n</span>
                     
                     <img src="https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-wordmark--light.svg" alt="Supabase" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
@@ -170,7 +300,7 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" class="tech-logo">
                     
-                    <span class="text-3xl font-bold text-slate-300 tracking-tight opacity-70 hover:opacity-100 hover:text-white transition cursor-default">n8n</span>
+                    <span class="text-3xl font-bold text-brand-muted tracking-tight opacity-70 hover:opacity-100 hover:text-brand-text transition cursor-default">n8n</span>
                     
                     <img src="https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-wordmark--light.svg" alt="Supabase" class="tech-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="tech-logo">
@@ -180,12 +310,12 @@
         </div>
     </div>
 
-    <section class="py-20 md:py-24 bg-brand-bg relative">
+    <section class="py-20 md:py-24 bg-brand-bg relative transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
                 <div>
-                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Is your CRM a graveyard of bad data?</h2>
-                    <p class="text-lg text-slate-400 mb-8 leading-relaxed">
+                    <h2 class="text-3xl md:text-5xl font-bold text-brand-text mb-6">Is your CRM a graveyard of bad data?</h2>
+                    <p class="text-lg text-brand-muted mb-8 leading-relaxed">
                         Sales reps spend only <span class="font-bold text-brand-primary">30% of their time selling</span>. The rest is wasted on manual admin.
                     </p>
                     <ul class="space-y-6">
@@ -194,8 +324,8 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </div>
                             <div class="ml-4">
-                                <h4 class="text-white font-semibold">Manual Data Entry</h4>
-                                <p class="text-slate-500 text-sm">Hours lost copying data from LinkedIn to CRM.</p>
+                                <h4 class="text-brand-text font-semibold">Manual Data Entry</h4>
+                                <p class="text-brand-muted text-sm">Hours lost copying data from LinkedIn to CRM.</p>
                             </div>
                         </li>
                         <li class="flex items-start">
@@ -203,8 +333,8 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                             </div>
                             <div class="ml-4">
-                                <h4 class="text-white font-semibold">Messy Duplicates</h4>
-                                <p class="text-slate-500 text-sm">Pitching the same lead twice looks unprofessional.</p>
+                                <h4 class="text-brand-text font-semibold">Messy Duplicates</h4>
+                                <p class="text-brand-muted text-sm">Pitching the same lead twice looks unprofessional.</p>
                             </div>
                         </li>
                         <li class="flex items-start">
@@ -212,20 +342,20 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             </div>
                             <div class="ml-4">
-                                <h4 class="text-white font-semibold">Slow Speed to Lead</h4>
-                                <p class="text-slate-500 text-sm">Letting hot prospects cool down while you sleep.</p>
+                                <h4 class="text-brand-text font-semibold">Slow Speed to Lead</h4>
+                                <p class="text-brand-muted text-sm">Letting hot prospects cool down while you sleep.</p>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="relative mt-8 md:mt-0">
                     <div class="absolute -inset-4 bg-brand-primary/20 rounded-full blur-3xl opacity-30"></div>
-                    <div class="relative bg-brand-card border border-white/10 rounded-2xl p-8 shadow-2xl">
+                    <div class="relative bg-brand-card border border-[var(--border-color)] rounded-2xl p-8 shadow-2xl">
                         <div class="text-center p-4 md:p-8">
-                           <div class="bg-brand-bg border border-white/5 p-6 md:p-8 rounded-xl shadow-inner inline-block w-full">
+                           <div class="bg-brand-bg border border-[var(--border-color)] p-6 md:p-8 rounded-xl shadow-inner inline-block w-full">
                                <p class="font-mono text-xs text-brand-primary mb-3 tracking-widest uppercase">System Status</p>
-                               <p class="text-4xl font-bold text-white mb-2">98%</p>
-                               <p class="text-slate-400">Data Hygiene Score</p>
+                               <p class="text-4xl font-bold text-brand-text mb-2">98%</p>
+                               <p class="text-brand-muted">Data Hygiene Score</p>
                            </div>
                            <div class="mt-8 flex justify-center space-x-3">
                                <div class="w-3 h-3 rounded-full bg-brand-primary animate-ping"></div>
@@ -238,109 +368,197 @@
         </div>
     </section>
 
-    <section id="solutions" class="py-24 bg-brand-bg relative border-t border-white/5">
+    <section id="solutions" class="py-24 bg-brand-bg relative border-t border-[var(--border-color)] transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">The Adaptiv Stack</h2>
-                <p class="text-lg text-slate-400">A modular approach to sales efficiency. Pick what you need, or automate the whole engine.</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-brand-text mb-6">The Adaptiv Stack</h2>
+                <p class="text-lg text-brand-muted">A modular approach to sales efficiency. Pick what you need, or automate the whole engine.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-brand-card p-8 rounded-2xl border border-white/5 hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
+                <div class="bg-brand-card p-8 rounded-2xl border border-[var(--border-color)] hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
                     <div class="w-14 h-14 bg-brand-bg rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 leading-tight">Lead Generation & Custom Enrichment</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">We scrape leads from LinkedIn & Directories, then enrich them with validated emails and phone numbers at scale.</p>
+                    <h3 class="text-xl font-bold text-brand-text mb-3 leading-tight">Lead Gen & Enrichment</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed">We scrape leads from LinkedIn & Directories, then enrich them with validated emails and phone numbers at scale.</p>
                 </div>
 
-                <div class="bg-brand-card p-8 rounded-2xl border border-white/5 hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
+                <div class="bg-brand-card p-8 rounded-2xl border border-[var(--border-color)] hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
                     <div class="w-14 h-14 bg-brand-bg rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">CRM Hygiene</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Detect duplicates, fill incomplete fields, and tag contacts automatically. Your CRM stays pristine.</p>
+                    <h3 class="text-xl font-bold text-brand-text mb-3">CRM Hygiene</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed">Detect duplicates, fill incomplete fields, and tag contacts automatically. Your CRM stays pristine.</p>
                 </div>
 
-                <div class="bg-brand-card p-8 rounded-2xl border border-white/5 hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
+                <div class="bg-brand-card p-8 rounded-2xl border border-[var(--border-color)] hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
                     <div class="w-14 h-14 bg-brand-bg rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Workflow</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Automate follow-ups, lead assignment, and integrate your CRM with Slack, Google Sheets, and Email.</p>
+                    <h3 class="text-xl font-bold text-brand-text mb-3">Workflow</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed">Automate follow-ups, lead assignment, and integrate your CRM with Slack, Google Sheets, and Email.</p>
                 </div>
 
-                <div class="bg-brand-card p-8 rounded-2xl border border-white/5 hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
+                <div class="bg-brand-card p-8 rounded-2xl border border-[var(--border-color)] hover:border-brand-primary/50 transition duration-300 hover:-translate-y-1 group">
                     <div class="w-14 h-14 bg-brand-bg rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">AI Agents</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Call summaries, personalized outreach drafting, and predictive lead scoring using selected LLMs (GPT-4o, Claude, Llama).</p>
+                    <h3 class="text-xl font-bold text-brand-text mb-3">AI Agents</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed">Call summaries, personalized outreach drafting, and predictive lead scoring using selected LLMs (GPT-4o, Claude, Llama).</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="pricing" class="py-24 bg-brand-bg border-t border-white/5">
+    <section id="pricing" class="py-24 bg-brand-bg border-t border-[var(--border-color)] transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Flexible Engagement Models</h2>
-                <p class="text-slate-400">Invest in infrastructure, not overhead.</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-brand-text mb-4">Flexible Engagement Models</h2>
+                <p class="text-brand-muted">Invest in infrastructure, not overhead.</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="bg-brand-card border border-white/5 rounded-2xl p-8 hover:border-brand-primary/30 transition flex flex-col">
-                    <h3 class="text-xl font-bold text-white">Standalone</h3>
+                
+                <div class="bg-brand-card border border-[var(--border-color)] rounded-2xl p-8 hover:border-brand-primary/30 transition flex flex-col">
+                    <h3 class="text-xl font-bold text-brand-text">Build & Manage</h3>
                     <div class="mt-4 mb-6">
-                        <span class="text-2xl font-bold text-brand-light">Flexible Pricing</span>
-                        <p class="text-sm text-slate-500 mt-2">Pay per service</p>
+                        <span class="text-2xl font-bold text-brand-primary">Setup + Monthly</span>
+                        <p class="text-sm text-brand-muted mt-2">We build workflows, then manage them.</p>
                     </div>
-                    <ul class="space-y-4 mb-8 text-slate-300 text-sm flex-grow">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Lead Gen OR CRM Cleaning</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Basic Automation Logic</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Weekly Reporting</li>
+                    <ul class="space-y-4 mb-8 text-brand-muted text-sm flex-grow">
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Lead Gen & CRM Deduplication</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Managed Outreach Workflows</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Sales Process Optimization</li>
+                        <li class="flex items-center font-semibold text-brand-primary"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Live in 14-30 Days</li>
                     </ul>
                 </div>
 
                 <div class="bg-brand-card border-2 border-brand-primary rounded-2xl p-8 shadow-2xl shadow-brand-primary/20 relative transform md:-translate-y-4 flex flex-col">
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-primary text-white text-xs font-bold uppercase py-1 px-3 rounded-full">Most Popular</div>
-                    <h3 class="text-xl font-bold text-white">Full Automation</h3>
+                    <h3 class="text-xl font-bold text-brand-text">Full Systems Partner</h3>
                     <div class="mt-4 mb-6">
-                        <span class="text-2xl font-bold text-white">Value Based</span>
-                        <p class="text-sm text-slate-400 mt-2">Complete pipeline takeover</p>
+                        <span class="text-2xl font-bold text-brand-text">Value Based</span>
+                        <p class="text-sm text-brand-muted mt-2">All workflows + Team Consulting</p>
                     </div>
-                    <ul class="space-y-4 mb-8 text-slate-200 text-sm flex-grow">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Full Pipeline Automation</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Deep CRM Integration</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>AI Sales Agent Included</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Custom Dashboards</li>
+                    <ul class="space-y-4 mb-8 text-brand-muted text-sm flex-grow">
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Complete Automation Stack</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Fully Managed Execution</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Strategic Team Consulting</li>
+                        <li class="flex items-center font-semibold text-brand-primary"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Live in 14-30 Days</li>
                     </ul>
                 </div>
 
-                <div class="bg-brand-card border border-white/5 rounded-2xl p-8 hover:border-brand-primary/30 transition flex flex-col">
-                    <h3 class="text-xl font-bold text-white">Enterprise</h3>
+                <div class="bg-brand-card border border-[var(--border-color)] rounded-2xl p-8 hover:border-brand-primary/30 transition flex flex-col">
+                    <h3 class="text-xl font-bold text-brand-text">90-Day Build & Train</h3>
                     <div class="mt-4 mb-6">
-                        <span class="text-2xl font-bold text-white">Custom</span>
-                        <p class="text-sm text-slate-500 mt-2">For mid-sized teams</p>
+                        <span class="text-2xl font-bold text-brand-primary">Custom Build</span>
+                        <p class="text-sm text-brand-muted mt-2">We build it, then hand it over.</p>
                     </div>
-                    <ul class="space-y-4 mb-8 text-slate-300 text-sm flex-grow">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Custom API Development</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Dedicated Support Engineer</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>SLA & Priority Support</li>
+                    <ul class="space-y-4 mb-8 text-brand-muted text-sm flex-grow">
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Full Automation Architecture</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>90-Day Implementation Support</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Team Training & SOP Creation</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 text-brand-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Complete System Handover</li>
                     </ul>
                 </div>
-            </div>
 
-            <div id="book-call" class="mt-16 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Ready to scale your sales?</h2>
-                <a href="https://calendly.com/adaptivaioutreach/30min" target="_blank" class="inline-block btn-primary text-xl px-12 py-5 rounded-full font-bold shadow-lg shadow-brand-primary/30 hover:scale-105 transition duration-300 hover:no-underline">
-                    Book a Discovery Call Today
-                </a>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="bg-brand-bg border-t border-white/5 text-slate-400 py-12">
+    <section id="roi" class="py-24 bg-brand-bg relative transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-card border border-[var(--border-color)] rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-brand-primary/20 rounded-full blur-3xl opacity-50"></div>
+                
+                <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold mb-6 uppercase tracking-wider">
+                            Opportunity Calculator
+                        </div>
+                        <h2 class="text-3xl font-bold text-brand-text mb-4">ROI Calculator: The Cost of Manual Work</h2>
+                        <p class="text-brand-muted mb-8 leading-relaxed">
+                            Stop guessing. See exactly how many deals you're losing by doing data entry instead of selling.
+                        </p>
+
+                        <div class="space-y-8">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-sm font-semibold text-brand-text">Hours/Week on Manual Prospecting & Admin</label>
+                                    <span class="text-brand-primary font-bold" id="hoursVal">10 hrs</span>
+                                </div>
+                                <input type="range" min="1" max="60" value="10" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer" id="hoursInput" oninput="calculateROI()">
+                                <p class="text-xs text-brand-muted mt-2">Includes prospecting, list building, and CRM data entry.</p>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-sm font-semibold text-brand-text">Average Deal Size ($)</label>
+                                    <span class="text-brand-primary font-bold" id="dealVal">$5,000</span>
+                                </div>
+                                <input type="range" min="1000" max="100000" step="1000" value="5000" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer" id="dealInput" oninput="calculateROI()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-bg/50 backdrop-blur-sm border border-[var(--border-color)] rounded-2xl p-8 text-center md:text-left">
+                        <div class="mb-8">
+                            <p class="text-brand-muted text-sm uppercase tracking-wider font-semibold mb-2">Potential New Demos</p>
+                            <div class="flex items-baseline justify-center md:justify-start gap-2">
+                                <span class="text-5xl font-bold text-brand-text" id="demosResult">4</span>
+                                <span class="text-lg text-brand-primary font-medium">/ month</span>
+                            </div>
+                            <p class="text-xs text-brand-muted mt-2">Based on reinvesting saved time into closing.</p>
+                        </div>
+
+                        <div class="pt-8 border-t border-[var(--border-color)]">
+                            <p class="text-brand-muted text-sm uppercase tracking-wider font-semibold mb-2">Potential Revenue Unlocked</p>
+                            <div class="flex items-baseline justify-center md:justify-start gap-2">
+                                <span class="text-4xl md:text-5xl font-bold text-brand-text" id="revenueResult">$4,000</span>
+                                <span class="text-lg text-brand-muted font-medium">/ month</span>
+                            </div>
+                            <p class="text-xs text-brand-muted mt-2">Assuming a modest 20% close rate on new demos.</p>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-[var(--border-color)]">
+                            <div class="bg-brand-primary/10 rounded-lg p-4 flex justify-between items-center">
+                                <span class="text-sm font-semibold text-brand-text">Yearly Value</span>
+                                <span class="text-xl font-bold text-brand-primary" id="yearlyResult">$48,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-[var(--ticker-bg)] border-t border-[var(--border-color)] py-3 overflow-hidden relative z-20 transition-colors duration-300">
+        <div class="news-ticker-container flex items-center">
+            <div class="news-ticker-content flex gap-12 px-4 text-sm font-medium text-brand-muted" id="newsTickerContent">
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Gartner predicts 60% of B2B sales work will be automated by 2026</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>OpenAI announces new enterprise features for automated workflows</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Anthropic Claude 3.5 Sonnet sets new benchmark for data extraction</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Salesforce launches autonomous AI agents for CRM management</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Google integrates Gemini deeply into Workspace for automated outreach</span>
+                
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Gartner predicts 60% of B2B sales work will be automated by 2026</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>OpenAI announces new enterprise features for automated workflows</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Anthropic Claude 3.5 Sonnet sets new benchmark for data extraction</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Salesforce launches autonomous AI agents for CRM management</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span>Google integrates Gemini deeply into Workspace for automated outreach</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="book-call" class="py-16 text-center bg-brand-bg transition-colors duration-300">
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-text mb-8">Ready to scale your sales?</h2>
+        <a href="https://calendly.com/adaptivaioutreach/30min" target="_blank" class="inline-block btn-primary text-xl px-12 py-5 rounded-full font-bold shadow-lg shadow-brand-primary/30 hover:scale-105 transition duration-300 hover:no-underline">
+            Book a Discovery Call Today
+        </a>
+    </div>
+
+    <footer id="contact" class="bg-brand-bg border-t border-[var(--border-color)] text-brand-muted py-12 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div class="flex justify-center space-x-8 text-sm mb-8">
                 <a href="#" class="hover:text-brand-primary transition">Privacy Policy</a>
@@ -350,6 +568,103 @@
             <p>&copy; 2026 Adaptiv AI. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // THEME TOGGLE LOGIC
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeBtn');
+            const icon = btn.querySelector('svg');
+            const currentTheme = body.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.setAttribute('data-theme', 'light');
+            document.getElementById('themeBtn').querySelector('svg').innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        }
+
+        // ROI CALCULATOR LOGIC (UPDATED)
+        function calculateROI() {
+            // Inputs
+            const hoursWeekly = parseInt(document.getElementById('hoursInput').value);
+            const dealValue = parseInt(document.getElementById('dealInput').value);
+
+            // Update UI Labels
+            document.getElementById('hoursVal').innerText = hoursWeekly + ' hrs/wk';
+            document.getElementById('dealVal').innerText = '$' + dealValue.toLocaleString();
+
+            // Core Logic
+            // Monthly Hours = Weekly * 4.33
+            const monthlyHours = Math.round(hoursWeekly * 4.33);
+            
+            // Demos (Monthly): 1 demo per 10 hours saved/reinvested
+            const monthlyDemos = Math.round(monthlyHours / 10);
+
+            // Revenue (Monthly): Demos * 20% Close Rate * Deal Value
+            const monthlyRevenue = Math.round(monthlyDemos * 0.2 * dealValue);
+
+            // Yearly Aggregate
+            const yearlyRevenue = monthlyRevenue * 12;
+
+            // Animate Numbers
+            document.getElementById('demosResult').innerText = monthlyDemos.toLocaleString();
+            document.getElementById('revenueResult').innerText = '$' + monthlyRevenue.toLocaleString();
+            document.getElementById('yearlyResult').innerText = '$' + yearlyRevenue.toLocaleString();
+        }
+
+        // Init Calculator
+        calculateROI();
+
+        /*
+        // --- REAL NEWS API INTEGRATION (OPTIONAL) ---
+        // To use real news:
+        // 1. Get a key from newsapi.org
+        // 2. Uncomment the function below
+        // 3. Call fetchNews() at the bottom of this script block
+
+        async function fetchNews() {
+            const apiKey = 'YOUR_API_KEY_HERE'; 
+            const url = `https://newsapi.org/v2/everything?q=artificial+intelligence+business&sortBy=publishedAt&language=en&apiKey=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.articles && data.articles.length > 0) {
+                    const ticker = document.getElementById('newsTickerContent');
+                    ticker.innerHTML = ''; // Clear static content
+                    
+                    // Take top 5 articles
+                    const articles = data.articles.slice(0, 5);
+                    
+                    // Build HTML
+                    let html = '';
+                    articles.forEach(article => {
+                        html += `<span class="flex items-center"><span class="w-2 h-2 bg-brand-primary rounded-full mr-2"></span><a href="${article.url}" target="_blank" class="hover:text-brand-primary transition">${article.title}</a></span>`;
+                    });
+                    
+                    // Duplicate for loop
+                    html += html; 
+                    ticker.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+        // fetchNews(); 
+        */
+    </script>
 
 </body>
 </html>
