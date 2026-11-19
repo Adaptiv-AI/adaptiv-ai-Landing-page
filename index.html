@@ -660,8 +660,9 @@
         
         // --- REAL NEWS API INTEGRATION (ACTIVATED) ---
         async function fetchNews() {
-            const apiKey = '4402c3cc82d44e3aa515fd095e3d5bf0'; 
+            const apiKey = ''; // Removed 2026-11-19 (security audit): keys never belong in a public page. The news strip stays empty. 
             // Query for "artificial intelligence" OR "technology business", sorted by newest
+            if (!apiKey) return;
             const url = `https://newsapi.org/v2/everything?q="artificial+intelligence"+OR+"technology+business"&sortBy=publishedAt&language=en&apiKey=${apiKey}`;
             
             try {
